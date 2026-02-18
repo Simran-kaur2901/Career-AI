@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Global Career AI - Ultra Premium</title>
+    <meta charset="UTF-8">
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Particles -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1f1c2c, #0f0c29);
+            overflow-x: hidden;
+            color: white;
+        }
+
+        #tsparticles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            margin-top: 60px;
+            text-shadow: 0 0 25px #00f2ff;
+        }
+
+        .card {
+            width: 60%;
+            margin: 50px auto;
+            padding: 50px;
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 40px rgba(0,255,255,0.2);
+            animation: fadeUp 1s ease;
+        }
+
+        /* ===== FIXED PREMIUM DROPDOWN ===== */
+
+        select {
+            width: 70%;
+            padding: 14px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 16px;
+
+            background: rgba(255,255,255,0.15);
+            color: white;
+
+            backdrop-filter: blur(10px);
+
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            cursor: pointer;
+
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 18px;
+        }
+
+        select option {
+            background: #1f1c2c;
+            color: white;
+        }
+
+        input {
+            width: 70%;
+            padding: 14px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border: none;
+            font-size: 16px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        button {
+            padding: 15px 40px;
+            border-radius: 20px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            background: linear-gradient(135deg,#00f2ff,#ff00c8);
+            color: white;
+            box-shadow: 0 0 20px #00f2ff;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 40px #ff00c8;
+        }
+
+        @keyframes fadeUp {
+            from {opacity:0; transform: translateY(40px);}
+            to {opacity:1; transform: translateY(0);}
+        }
+    </style>
+
+    <script>
+        function sparkle() {
+            confetti({
+                particleCount: 300,
+                spread: 180,
+                origin: { y: 0.6 }
+            });
+        }
+
+        window.onload = function() {
+            tsParticles.load("tsparticles", {
+                particles: {
+                    number: { value: 80 },
+                    size: { value: 3 },
+                    move: { speed: 1 },
+                    links: { enable: true, color: "#00f2ff" },
+                    color: { value: "#00f2ff" }
+                }
+            });
+        }
+
+        function toggleStudyOptions() {
+            let path = document.getElementById("path_type").value;
+            let section = document.getElementById("studySection");
+            section.style.display = path.includes("Study") ? "block" : "none";
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="tsparticles"></div>
+
+<h1>🌌 Global Career AI</h1>
+
+<div class="card">
+<form action="/shortlist" method="POST" onsubmit="sparkle()">
+
+<h2>Select Field</h2>
+<select name="field" required>
+{% for field in fields %}
+<option value="{{ field }}">{{ field }}</option>
+{% endfor %}
+</select>
+
+<h2>Select Path</h2>
+<select name="path_type" id="path_type" onchange="toggleStudyOptions()" required>
+<option value="Job">Direct Job</option>
+<option value="Study">Study Only</option>
+<option value="Study then Job">Study then Job</option>
+<option value="Part-time with Study">Part-time with Study</option>
+<option value="Business">Business</option>
+</select>
+
+<div id="studySection" style="display:none;">
+<h3>Country</h3>
+<select name="country">
+{% for country in countries %}
+<option value="{{ country }}">{{ country }}</option>
+{% endfor %}
+</select>
+
+<h3>Budget</h3>
+<input type="number" name="budget" placeholder="Budget per year (USD)">
+</div>
+
+<br><br>
+<button type="submit">Launch Plan 🚀</button>
+
+</form>
+</div>
+
+</body>
+</html>
