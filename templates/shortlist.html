@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Select Roles</title>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+body {
+    background: radial-gradient(circle at top, #141e30, #243b55);
+    color: white;
+    font-family: Poppins;
+    padding: 40px;
+}
+
+.card {
+    width: 60%;
+    margin: auto;
+    padding: 40px;
+    border-radius: 25px;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 40px rgba(0,255,255,0.2);
+}
+
+input[type="checkbox"] {
+    transform: scale(1.4);
+    margin-right: 10px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 15px 35px;
+    border-radius: 20px;
+    border: none;
+    background: linear-gradient(135deg,#ff00c8,#00f2ff);
+    color: white;
+    cursor: pointer;
+}
+</style>
+
+<script>
+function sparkle(){
+confetti({particleCount:250,spread:150});
+}
+</script>
+</head>
+
+<body>
+
+<h1>🎯 Choose Roles</h1>
+
+<div class="card">
+<form action="/final" method="POST" onsubmit="sparkle()">
+
+<input type="hidden" name="country" value="{{ country }}">
+<input type="hidden" name="budget" value="{{ budget }}">
+<input type="hidden" name="path_type" value="{{ path_type }}">
+
+{% for job in jobs %}
+<p>
+<input type="checkbox" name="jobs" value="{{ job }}">
+{{ job }}
+</p>
+{% endfor %}
+
+<button type="submit">Generate Master Plan 💎</button>
+
+</form>
+</div>
+
+</body>
+</html>
